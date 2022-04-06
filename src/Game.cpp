@@ -25,11 +25,11 @@ Game::~Game(){
     delete Window;
 }
 
-bool Game::isOpen(){
+bool Game::isOpen(){//calling window.isOpen to check if window is open or not
     return Window->isOpen();
 }
 
-void Game::checkEvents(){
+void Game::checkEvents(){//check for keyboard presses/close button press
     while(Window->pollEvent(event)){
         if(event.type==sf::Event::Closed)
             Window->close();

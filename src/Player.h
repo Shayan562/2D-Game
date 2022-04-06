@@ -19,7 +19,7 @@ class Player{
         Player();
         ~Player();
 
-        void movement();
-        void update();
-        void render(sf::RenderTarget &target);
+        void movement();//check for key inputs and move the player
+        void update();//update the position/sprite(animation) of player
+        void render(sf::RenderTarget &target);//draw it to the screen
 };
