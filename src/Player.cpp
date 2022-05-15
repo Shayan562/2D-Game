@@ -1,7 +1,7 @@
 #include "Player.h"
 
 void Player::initTexture(){
-    if(!textureSheet.loadFromFile("/home/shayan/Documents/new folder/Project/res/hell-beast-idle.png")){
+    if(!textureSheet.loadFromFile("/home/shayan/Documents/Game/2d-Game/res/hell-beast-idle.png")){
         std::cout<<"Couldn't load player sheet\n";
     }
 
