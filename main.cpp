@@ -1,9 +1,7 @@
 //#include <sctdlib>
 
 
-#include "src/Game.h"
 #include "src/Game.cpp"
-#include "src/Player.h"
 #include "src/Player.cpp"
 
 
