@@ -15,7 +15,9 @@ class Game{
         //initializers
         void init();//innitializer
         void initPlayer();//for innitializing plyaer
-    
+        sf::VertexArray ver;
+        sf::Texture texture;
+        sf::VertexArray triangle;
     public:
         //constructors
         Game();
