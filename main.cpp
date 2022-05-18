@@ -1,8 +1,8 @@
 //#include <sctdlib>
 
 
-#include "src/Game.cpp"
-#include "src/Player.cpp"
+#include "src/Game.h"
+#include "src/Player.h"
 
 
 int main(){
