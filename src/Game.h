@@ -1,9 +1,10 @@
 #pragma once
 #include "Player.h"//contains iostream and sfml/graphics
+#include "Level1.h"
 
 //global variables for window width and height
-const int HEIGHT=600;
-const int WIDTH=800;
+const int HEIGHT=720;
+const int WIDTH=1280;
 
 class Game{
     private:
@@ -12,6 +13,7 @@ class Game{
         sf::Event event;//for polling
 
         Player* player;
+        Level1 level;
         //initializers
         void init();//innitializer
         void initPlayer();//for innitializing plyaer
@@ -90,15 +92,19 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 
 void Game::update(){
     checkEvents();
+    player->update();
     //std::cout<<"Pos: "<<sf::Mouse::getPosition(*Window).x<<'\n';
-    updatePlayer();
+    // level.drawTiles(*Window);
+    // updatePlayer();
 }
 
 void Game::render(){
     //clear, render and then draw to the screen
 
 //    Window->draw(triangle);
-    Window->clear(sf::Color::White);//to clear the window
+    Window->clear(sf::Color(135,206,235));//to clear the window
+    // renderPlayer();
+    level.drawTiles(*Window);
     renderPlayer();
 
     //draw game here

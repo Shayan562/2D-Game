@@ -26,15 +26,27 @@ class Player{
 
 
 void Player::initTexture(){
-    if(!textureSheet.loadFromFile("res/hell-beast-idle.png")){
+    try{
+        if(!textureSheet.loadFromFile("res/john_stand_shooting_ng.png")){
+            throw 404;
+        }
+    }
+    catch(int a){
+        //write error to log file
         std::cout<<"Couldn't load player sheet\n";
     }
+    // if(!textureSheet.loadFromFile("res/hell-beast-idle.png")){
+    //     std::cout<<"Couldn't load player sheet\n";
+    // }
 
 }
 void Player::initSprite(){
     sprite.setTexture(textureSheet);
-    current=sf::IntRect(0,0,55,67);//approx 55 per animal
+    current=sf::IntRect(0,0,30,23);//approx 30 per image in the sheet
     sprite.setTextureRect(current);
+    sprite.setScale(2.f,2.f);
+
+    sprite.setPosition(1280-30,720-23);
 }
 Player::Player(){
     initTexture();
@@ -48,9 +60,11 @@ Player::~Player(){
 void Player::movement(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
         sprite.move(-1.f,0.f);
+        sprite.setScale(-2.f,2.f);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
         sprite.move(1.f,0.f);
+        sprite.setScale(2.f,2.f);
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
