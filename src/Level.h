@@ -1,11 +1,12 @@
 #pragma once
 #include "StoneTiles.h"
 #include <SFML/Graphics.hpp>
+#include "Area.h"
 
 class Levels{
     protected:
         sf::Vector2f windowDimensions;
-        void init();
+        virtual void init();
     public:
         Levels();
 

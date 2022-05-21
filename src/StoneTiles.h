@@ -19,6 +19,7 @@ class StoneTiles:public Entitys{
 
         void update(sf::Vector2f );
         void render(sf::RenderTarget &);
+        // bool collision
 
 
 };

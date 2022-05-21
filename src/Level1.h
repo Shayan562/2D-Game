@@ -10,18 +10,22 @@ class Level1: public Levels{
         sf::Vector2f tileArea;
 
         void init();
+        void initRowsX();
     public:
         Level1();
         // virtual ~Level1();
 
         void drawTiles(sf::RenderTarget &);
+        Area rows[9];
 
 
 
 };
 Level1::Level1(){
     init();
+    initRowsX();
 }
+
 void Level1::init(){
     tileArea=floorBrick.getDimensions();
 }
@@ -31,18 +35,41 @@ void Level1::drawTiles(sf::RenderTarget &window){
         floorBrick.update(sf::Vector2f(i*tileArea.x,windowDimensions.y-tileArea.y));
         floorBrick.render(window);
     }
-    for(int j=0;j<4;j++){
+    rows[0].top=windowDimensions.y-tileArea.y;
+    rows[0].left=0;
+    rows[0].bottom=windowDimensions.y;
+    rows[0].right=1280;
+    for(int j=1;j<=7;j+=2){
         for(int i=1;i<=9;i++){
-            floorBrick.update(sf::Vector2f(i*tileArea.x,windowDimensions.y-tileArea.y-height*level));
+            floorBrick.update(sf::Vector2f(i*tileArea.x,windowDimensions.y-tileArea.y-height*j));
             floorBrick.render(window);
         }
-        level++;
+        //adding the cordinatoes(top layer and bottom layer) of the whole floor to array
+        rows[j].top=windowDimensions.y-tileArea.y-height*j;//720-30(tile height)-90(extra space)*j(current floor)
+        rows[j].bottom=windowDimensions.y-height*j;
+    }
+    for(int j=2;j<=6;j+=2){
         for(int i=0;i<9;i++){
-            floorBrick.update(sf::Vector2f(i*tileArea.x,windowDimensions.y-tileArea.y-height*level));
+            floorBrick.update(sf::Vector2f(i*tileArea.x,windowDimensions.y-tileArea.y-height*j));
             floorBrick.render(window);
-    }
-    level++;
+        }
+        // adding the coordinates(top layer and bottom layer) of the whole floor to array
+        rows[j].top=windowDimensions.y-tileArea.y-height*j;
+        rows[j].bottom=windowDimensions.y-height*j;
     }
 
 
+}
+void Level1::initRowsX(){
+    rows[0].left=0;
+    rows[0].right=1280;
+
+    for(int i=1;i<=7;i+=2){
+        rows[i].left=128;
+        rows[i].right=1280;
+    }
+    for(int i=2;i<=6;i+=2){
+        rows[i].left=0;
+        rows[i].right=1152;
+    }
 }
