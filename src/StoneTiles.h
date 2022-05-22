@@ -35,7 +35,6 @@ void StoneTiles::init(){
         }
         else{
             tile->setTexture(&texture);
-            tile->setOutlineThickness(2);
 
         }
     }
@@ -43,9 +42,11 @@ void StoneTiles::init(){
     {
         //log error data to file
         tile->setFillColor(sf::Color(128,128,128));
-        tile->setOutlineThickness(2);
 
     }
+
+        tile->setOutlineThickness(1);
+    
     
    // texture.loadFromFile("Rocks2_Dark.png");
     //tile->setTexture(&texture);

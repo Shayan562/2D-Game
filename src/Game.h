@@ -61,6 +61,7 @@ void Game::init(){
 }
 void Game::initPlayer(){//initializing the player object
     player= new Player();
+    // player->setMapCollisions(level.rows);
 }
 
 Game::Game(){
@@ -86,6 +87,11 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             Window->close();
+
+        if(sf::Event::KeyReleased){
+            player->stopJump();
+
+        }
 
     }
 }
