@@ -3,6 +3,7 @@
 #include <iostream>
 #include "Area.h"
 #include "Level1.h"
+#include "Bullet.h"
 using namespace std;
 
 class Player{
@@ -16,6 +17,7 @@ class Player{
         //initializers
         void initTexture();
         void initSprite();
+        sf::Vector2f temp;
         // Area obj.rows[8];
 
 
@@ -24,6 +26,10 @@ class Player{
         bool isJumping= false;
         const float speed=2.5;
         const float jumpHeight=-6.5;//up in sfml is lower
+
+        char directionCurr;
+        bool bullet;
+
         Level1 obj;
 
     public:
@@ -65,11 +71,11 @@ void Player::initSprite(){
     // current=sf::IntRect(4,5,32,21);//approx 30 per image in the sheet
 
     // current=sf::IntRect(5,4,19,18);//left,top,width,height
-    
+
     current=sf::IntRect(0,0,38,36);//left,top,width,height new
     sprite.setTextureRect(current);
     // sprite.setScale(-2.f,2.f);
- 
+
     sprite.setOrigin(19.f,18.f);
     sprite.setPosition(1280-(19),720-30-(18));
     playerBounds.top=720-30-18;
@@ -89,17 +95,19 @@ Player::~Player(){
 }
 
 void Player::movement(char tempColHor, char tempColVer){
-    sf::Vector2f a=sprite.getPosition();
+ //   sf::Vector2f a=sprite.getPosition();
     // cout<<a.y+36<<" , ";
     // cout<<"bbb";
-    if(sf::Keyboard::isKeyPressed)
+  //  if(sf::Keyboard::isKeyPressed)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && tempColHor!='l' ){
+        directionCurr='l';
         //tempCOlHor!='l'
         // cout<<"a";
         sprite.move(-1*speed,0.f); //2.5
         sprite.setScale(-1.f,1.f);
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && tempColHor!='r'){
+            directionCurr='r';
         sprite.move(speed,0.f);//2.5
         sprite.setScale(1.f,1.f);
     }
@@ -121,33 +129,41 @@ void Player::movement(char tempColHor, char tempColVer){
     else if(tempColVer!='b' && isJumping==false){
         sprite.move(0,gravity);
     }
+
     // else{
         // cout<<"abc";
         // sprite.move(0.f,0.f);
     // }
 
-    sf::Vector2f temp=sprite.getPosition();
+    temp=sprite.getPosition();
     playerBounds.top=temp.y-18;
     playerBounds.left=temp.x-19;
     playerBounds.bottom=temp.y+18;
     playerBounds.right=temp.x+19;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && bullet==false){
+        bullet=true;
+        Bullet *pro(directionCurr,temp);
+    }
 }
 
 void Player::update(){
     char ColVer=collision();
     char ColHor=collision('a');
+    pro->update();
     movement(ColHor,ColVer);
+
 
 }
 void Player::render(sf::RenderTarget &target){
     target.draw(sprite);
+    pro->render(target;
 }
 
 char Player::collision(){
     for(int i=0;i<8;i++){
         // bool a=playerBounds.bottom < obj.rows[i].top;
         // cout<<"map"<<a;
-        sf::Vector2f a=sprite.getPosition();
+   //     sf::Vector2f a=sprite.getPosition();
         if (playerBounds.top<=0){
             if(!isJumping){
                 sprite.move(0.f,gravity);
@@ -173,7 +189,7 @@ char Player::collision(char a){
     }
     else if(playerBounds.right >1280){
         return 'r';
-    } 
+    }
     return 'n';
 }
 

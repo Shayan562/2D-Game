@@ -12,6 +12,10 @@ class Game{
         sf::VideoMode windowDimensions;//videoMode decleration(for window sizing)
         sf::Event event;//for polling
 
+        //need to make it proper
+        sf::Sprite background;
+        sf::Texture texBg;
+
         Player* player;
         Level1 level;
         //initializers
@@ -40,7 +44,7 @@ void Game::init(){
     windowDimensions.width=WIDTH;
     windowDimensions.height=HEIGHT;
     //initializing the window
-    Window=new sf::RenderWindow(windowDimensions,"New");
+    Window=new sf::RenderWindow(windowDimensions,"The Climber");
     Window->setFramerateLimit(60);
 
    // triangle.setPrimitiveType(sf::PrimitiveType::Triangles);
@@ -70,6 +74,19 @@ Game::Game(){
     //initializing
     init();
     initPlayer();
+
+    //move backgroung code into init function
+    texBg.loadFromFile("res/rsz_1sky69.png");
+  //       sf::Texture texture;
+    //need to do exception handling for this
+   // if(!texture.loadFromFile("res/rsz_1sky69.png"))
+     //   {
+       //    std::cout<<"404 Error Not Found";
+
+        //}
+//    sf::Sprite background;
+    background.setTexture(texBg);
+    background.setPosition(sf::Vector2f(0,0));
 
 }
 Game::~Game(){
@@ -107,10 +124,13 @@ void Game::update(){
 }
 
 void Game::render(){
+    Window->clear();
+
+    Window->draw(background);
     //clear, render and then draw to the screen
 
 //    Window->draw(triangle);
-    Window->clear(sf::Color(135,206,235));//to clear the window
+    // Window->clear(sf::Color(135,206,235));//to clear the window
     // renderPlayer();
     level.drawTiles(*Window);
     renderPlayer();

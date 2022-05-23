@@ -3,7 +3,7 @@
 
 class Splashscreen{
     private:
-        
+        sf::Texture texture;
 
 sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");
 
