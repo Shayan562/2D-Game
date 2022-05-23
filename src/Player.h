@@ -90,7 +90,7 @@ Player::~Player(){
 
 void Player::movement(char tempColHor, char tempColVer){
     sf::Vector2f a=sprite.getPosition();
-    cout<<a.y+36<<" , ";
+    // cout<<a.y+36<<" , ";
     // cout<<"bbb";
     if(sf::Keyboard::isKeyPressed)
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && tempColHor!='l' ){
