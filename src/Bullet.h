@@ -6,16 +6,16 @@ private:
     sf::CircleShape bullet;
     void init(sf::Vector2f pos);
 public:
-    Bullet(char dir, sf::Vector2f pos);
+    Bullet(char, sf::Vector2f);
     ~Bullet();
     void ProjectileMovement();
     bool collision();
     sf::FloatRect getGlobalBound();
-    void update();//update the position/sprite(animation) of player
+    void update();
     void render(sf::RenderTarget &target);
 
 };
-void Bullet::Bullet(char dir, sf::Vector2f pos):Projectile(dir),speed(5.1){
+void Bullet::Bullet(char dir, sf::Vector2f pos):Projectile(dir,5.1){
     init(pos);
 }
 void Bullet::~Bullet(){
@@ -33,3 +33,7 @@ bool Bullet::update(){
 void Bullet::render(sf::RenderTarget &target){
     target.draw(bullet);
 }
+sf::FloatRect Bullet::getGlobalBound(){
+    return bullet.getGlobalBound();
+}
+

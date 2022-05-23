@@ -149,14 +149,15 @@ void Player::movement(char tempColHor, char tempColVer){
 void Player::update(){
     char ColVer=collision();
     char ColHor=collision('a');
-    pro->update();
+    if(bullet){
+        pro->update();
+    }
     movement(ColHor,ColVer);
-
 
 }
 void Player::render(sf::RenderTarget &target){
     target.draw(sprite);
-    pro->render(target;
+    pro->render(target);
 }
 
 char Player::collision(){
