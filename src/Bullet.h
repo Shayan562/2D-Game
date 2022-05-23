@@ -4,28 +4,30 @@
 class Bullet:public Projectile{
 private:
     sf::CircleShape bullet;
-    void init(sf::Vector2f pos);
+    void init();
+
 public:
-    Bullet(char, sf::Vector2f);
+    Bullet();
     ~Bullet();
     void ProjectileMovement();
     bool collision();
     sf::FloatRect getGlobalBound();
     void update();
     void render(sf::RenderTarget &target);
+    void setPosition(sf::Vector2f);
+    void setDirection(char dir);
 
 };
-void Bullet::Bullet(char dir, sf::Vector2f pos):Projectile(dir,5.1){
-    init(pos);
+Bullet::Bullet():Projectile(5.1){
+    init();
 }
-void Bullet::~Bullet(){
+Bullet::~Bullet(){
 }
-void Bullet::init(sf::Vector2f pos){
+void Bullet::init(){
     bullet.setFillColor(sf::Color::Black);
     bullet.setRadius(2.f);
-    bullet.setPosition(pos);
 }
-bool Bullet::update(){
+void Bullet::update(){
     collision();
     ProjectileMovement();
 }
@@ -34,6 +36,33 @@ void Bullet::render(sf::RenderTarget &target){
     target.draw(bullet);
 }
 sf::FloatRect Bullet::getGlobalBound(){
-    return bullet.getGlobalBound();
+    return bullet.getGlobalBounds();
+}
+bool Bullet::collision(){
+    if(bullet.getPosition().x>1280){
+        return true;
+    }
+    else if(bullet.getPosition().x<0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+void Bullet::ProjectileMovement(){
+    if(collision()==false){
+        if(direction=='l'){
+            bullet.move(-1*speed,0.f);
+        }
+        else{ 
+            bullet.move(speed,0.f);
+        }
+    }
+}
+void Bullet::setPosition(sf::Vector2f pos){
+    bullet.setPosition(pos);
+}
+void Bullet::setDirection(char dir){
+    direction=dir;
 }
 

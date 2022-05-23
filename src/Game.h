@@ -1,6 +1,14 @@
 #pragma once
 #include "Player.h"//contains iostream and sfml/graphics
 #include "Level1.h"
+#include <time.h>
+#include <cstdlib>
+#include "Player2.h"
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 
 //global variables for window width and height
 const int HEIGHT=720;
@@ -16,11 +24,14 @@ class Game{
         sf::Sprite background;
         sf::Texture texBg;
 
+
         Player* player;
+        Player2* obj2;
         Level1 level;
         //initializers
         void init();//innitializer
         void initPlayer();//for innitializing plyaer
+        void initPlayer2();
     //  //  sf::VertexArray ver;
     //    sf::Texture texture;
     //    sf::VertexArray triangle;
@@ -37,6 +48,10 @@ class Game{
         void updatePlayer();
         void renderPlayer();
         void splashScreen();
+
+        void updateobj2();
+        void renderobj2();
+
 };
 
 void Game::init(){
@@ -63,17 +78,22 @@ void Game::init(){
     // ver.resize(32*32*4);
 
     // texture.loadFromFile("res/ground textures/Bricks1_Dark.png");
+
 }
 void Game::initPlayer(){//initializing the player object
     player= new Player();
     // player->setMapCollisions(level.rows);
 }
+void Game::initPlayer2(){
+    obj2 = new Player2();
+}
 
 Game::Game(){
-    splashScreen();
+    // splashScreen();
     //initializing
     init();
     initPlayer();
+    initPlayer2();
 
     //move backgroung code into init function
     texBg.loadFromFile("res/rsz_1sky69.png");
@@ -92,6 +112,7 @@ Game::Game(){
 Game::~Game(){
     //both are pointer so they have to be deleted manually
     delete player;
+    delete obj2;
     delete Window;
 }
 
@@ -109,6 +130,7 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 
         if(sf::Event::KeyReleased){
             player->stopJump();
+            obj2->stopJump();
 
         }
 
@@ -118,6 +140,7 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 void Game::update(){
     checkEvents();
     player->update();
+    obj2->update();
     //std::cout<<"Pos: "<<sf::Mouse::getPosition(*Window).x<<'\n';
     // level.drawTiles(*Window);
     // updatePlayer();
@@ -133,7 +156,31 @@ void Game::render(){
     // Window->clear(sf::Color(135,206,235));//to clear the window
     // renderPlayer();
     level.drawTiles(*Window);
+
     renderPlayer();
+
+    renderobj2();
+
+
+//    sf::RectangleShape shape(sf::Vector2f(10,5));
+//     shape.setPosition(10,10);
+
+
+
+//     sf::Sprite forTrieal;
+//     sf::Texture testTex;
+//     sf::IntRect curr(sf::IntRect(0,0,38,36));
+//     testTex.loadFromFile("res/john3part2.png");
+//     forTrieal.setTextureRect(curr);
+//     forTrieal.setPosition(10,10);
+
+
+ 
+
+
+
+    // Window->draw(shape);
+    // Window->draw(forTrieal);
 
     //draw game here
     Window->display();//to draw to the screen
@@ -142,8 +189,14 @@ void Game::render(){
 void Game::updatePlayer(){
     player->update();
 }
+void Game::updateobj2(){
+    obj2->update();
+}
 void Game::renderPlayer(){
     player->render(*Window);
+}
+void Game::renderobj2(){
+    obj2->render(*Window);
 }
 void Game::splashScreen(){
         sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");
@@ -172,7 +225,7 @@ void Game::splashScreen(){
                 window.display();
                 for(int i=0;i<15;i++)
                 {
-                    Sleep(550);
+                    sleep(1);
                 }
                 window.close();
 

@@ -6,10 +6,10 @@
 #include "Bullet.h"
 using namespace std;
 
-class Player{
+class Player2{
     private:
         sf::Sprite sprite;
-        sf::Texture textureSheet;
+        sf::Texture texture;
 
         //animation
         sf::IntRect current;
@@ -33,8 +33,8 @@ class Player{
         Level1 obj;
 
     public:
-        Player();
-        ~Player();
+        Player2();
+        ~Player2();
 
         void movement(char , char);//check for key inputs and move the player
         void update();//update the position/sprite(animation) of player
@@ -48,16 +48,13 @@ class Player{
         void stopJump();
 
         void destructBullet(Bullet*);
-        sf::IntRect getPlayerGlobal();
-        sf::IntRect getObjectGlobal();
-        sf::IntRect getForeignObjectGlobal();
         // void setMapCollisions(Area arr[8]);
 };
 
 
-void Player::initTexture(){
+void Player2::initTexture(){
     try{
-        if(!textureSheet.loadFromFile("res/john3.png")){
+        if(!texture.loadFromFile("res/john3part2.png")){
             throw 404;
         }
     }
@@ -65,65 +62,67 @@ void Player::initTexture(){
         //write error to log file
         std::cout<<"Couldn't load player sheet\n";
     }
-    // textureSheet.loadFromFile("res/john3.png");
-    // if(!textureSheet.loadFromFile("res/hell-beast-idle.png")){
+    // texture.loadFromFile("res/john3.png");
+    // if(!texture.loadFromFile("res/hell-beast-idle.png")){
     //     std::cout<<"Couldn't load player sheet\n";
     // }
 
 }
-void Player::initSprite(){
-    sprite.setTexture(textureSheet);
+void Player2::initSprite(){
+    sprite.setTexture(texture);
+
+
     // current=sf::IntRect(4,5,32,21);//approx 30 per image in the sheet
 
     // current=sf::IntRect(5,4,19,18);//left,top,width,height
 
     current=sf::IntRect(0,0,38,36);//left,top,width,height new
     sprite.setTextureRect(current);
-    // sprite.setScale(-2.f,2.f);
+    // sprite.setSize(sf::Vector2f(38,36));
 
     sprite.setOrigin(19.f,18.f);
-    sprite.setPosition(1280-(19),720-30-(18));
-    playerBounds.top=720-30-18;
+    sprite.setPosition(1280-19,0+18);
+    playerBounds.top=18;
     playerBounds.left=1280-19;
-    playerBounds.bottom=720-30+18;
+    playerBounds.bottom=0+18;
     playerBounds.right=1280+19;
 
 
 }
-Player::Player(){
+Player2::Player2(){
     initTexture();
     initSprite();
     pro=new Bullet;
     bullet=false;
 }
 
-Player::~Player(){
+Player2::~Player2(){
 
 }
 
-void Player::movement(char tempColHor, char tempColVer){
+void Player2::movement(char tempColHor, char tempColVer){
  //   sf::Vector2f a=sprite.getPosition();
     // cout<<a.y+36<<" , ";
     // cout<<"bbb";
   //  if(sf::Keyboard::isKeyPressed)
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && tempColHor!='l' ){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && tempColHor!='l' ){
         directionCurr='l';
         //tempCOlHor!='l'
         // cout<<"a";
         sprite.move(-1*speed,0.f); //2.5
         sprite.setScale(-1.f,1.f);
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D) && tempColHor!='r'){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && tempColHor!='r'){
             directionCurr='r';
         sprite.move(speed,0.f);//2.5
         sprite.setScale(1.f,1.f);
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W) && (tempColVer=='n' || tempColVer=='b')){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && (tempColVer=='n' || tempColVer=='b')){
         sprite.move(0.f,jumpHeight);//1
         isJumping=true;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::S) && (tempColVer=='n' || tempColVer=='t')){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && (tempColVer=='n' || tempColVer=='t')){
         //sprite.move(0.f,1.f);
 
         // if(a.y+36 > 690 && a.y+36 < 720){
@@ -149,17 +148,17 @@ void Player::movement(char tempColHor, char tempColVer){
     playerBounds.right=temp.x+19;
 
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && bullet==false){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0) && bullet==false){
         bullet=true;
         pro->setDirection(directionCurr);
         pro->setPosition(temp);
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q) && bullet==true){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad7) && bullet==true){
         bullet=false;
     }
 }
 
-void Player::update(){
+void Player2::update(){
     char ColVer=collision();
     char ColHor=collision('a');
     if(bullet){
@@ -173,14 +172,14 @@ void Player::update(){
     movement(ColHor,ColVer);
 
 }
-void Player::render(sf::RenderTarget &target){
+void Player2::render(sf::RenderTarget &target){
     target.draw(sprite);
     if(bullet){
     pro->render(target);
     }
 }
 
-char Player::collision(){
+char Player2::collision(){
     for(int i=0;i<8;i++){
         // bool a=playerBounds.bottom < obj.rows[i].top;
         // cout<<"map"<<a;
@@ -204,7 +203,7 @@ char Player::collision(){
     }
     return 'n';
 }
-char Player::collision(char a){
+char Player2::collision(char a){
     if(playerBounds.left < 0){
         return 'l';
     }
@@ -214,7 +213,7 @@ char Player::collision(char a){
     return 'n';
 }
 
-bool Player::collision(int i){
+bool Player2::collision(int i){
     // if(i==7){
         // return false;
     // }
@@ -231,6 +230,6 @@ bool Player::collision(int i){
 
 }
 
-void Player::stopJump(){
+void Player2::stopJump(){
     isJumping=false;
 }

@@ -4,14 +4,15 @@
 #include<iostream>
 #include<unistd.h>
 #include<math.h>
-#include<conio.h>
-#include<Windows.h>
-#include<cstdlib>
+// #include<conio.h>
+// #include<Windows.h>
+// #include<cstdlib>
 #include<ctime>
 #include<cerrno>
 #include "src/Game.h"
 #include "src/Player.h"
 #include "src/Level1.h"
+#include "src/Player2.h"
 int main()
 {
     // sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");

@@ -4,9 +4,9 @@
 class Projectile{
     protected:
         const float speed;
-        const char direction;
+        char direction;
     public:
-        Projectile(char,float);
+        Projectile(float);
         virtual ~Projectile();
         virtual void ProjectileMovement()=0;
         virtual bool collision()=0;
@@ -14,6 +14,6 @@ class Projectile{
         virtual void update()=0;//update the position/sprite(animation) of player
         virtual void render(sf::RenderTarget &target)=0;
 };
-Projectile::Projectile(char dir, float s):direction(dir),speed(s){}
+Projectile::Projectile(float s):speed(s){}
 
 Projectile::~Projectile(){}

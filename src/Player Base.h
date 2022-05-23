@@ -8,6 +8,7 @@ using namespace std;
 
 class Player{
     private:
+    protected:
         sf::Sprite sprite;
         sf::Texture textureSheet;
 
@@ -15,9 +16,10 @@ class Player{
         sf::IntRect current;
 
         //initializers
-        void initTexture();
-        void initSprite();
-        sf::Vector2f temp;
+        virtual void initTexture();
+        virtual void initSprite();
+       sf::Vector2f temp;
+
         // Area obj.rows[8];
 
 
@@ -29,29 +31,25 @@ class Player{
 
         char directionCurr;
         bool bullet;
-        Bullet *pro;
-        Level1 obj;
+        // Bullet *pro;
+        // Level1 obj;
 
     public:
         Player();
         ~Player();
 
-        void movement(char , char);//check for key inputs and move the player
-        void update();//update the position/sprite(animation) of player
-        void render(sf::RenderTarget &target);//draw it to the screen
+        virtual void movement(char , char);//check for key inputs and move the player
+        virtual void update();//update the position/sprite(animation) of player
+        virtual void render(sf::RenderTarget &target);//draw it to the screen
 
         Area playerBounds;
-        char collision();
-        char collision(char a);
-        bool collision(int);
-        bool collisionDown(int );
+        virtual char collision();
+        virtual char collision(char);
+        virtual bool collision(int);
+        // bool collisionDown(int );
         void stopJump();
 
-        void destructBullet(Bullet*);
-        sf::IntRect getPlayerGlobal();
-        sf::IntRect getObjectGlobal();
-        sf::IntRect getForeignObjectGlobal();
-        // void setMapCollisions(Area arr[8]);
+        // void destructBullet(Bullet*);
 };
 
 
