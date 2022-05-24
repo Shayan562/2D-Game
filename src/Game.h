@@ -53,6 +53,7 @@ class Game{
         void renderobj2();
 
         bool bulletCollision(sf::FloatRect, sf::FloatRect);
+        void collisionUpdate();
 
 };
 
@@ -150,13 +151,7 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 
 void Game::update(){
     checkEvents();
-    if(bulletCollision(player->getPlayerGlobal(),obj2->getObjectGlobal())){
-        cout<<"Player 1 dead\n";
-        Window->close();
-    }
-    if(bulletCollision(obj2->getPlayerGlobal(),player->getObjectGlobal())){
-        cout<<"Player 2 dead\n";
-    }
+    collisionUpdate();
     player->update();
     obj2->update();
     //std::cout<<"Pos: "<<sf::Mouse::getPosition(*Window).x<<'\n';
@@ -172,34 +167,11 @@ void Game::render(){
 
 //    Window->draw(triangle);
     // Window->clear(sf::Color(135,206,235));//to clear the window
-    // renderPlayer();
     level.drawTiles(*Window);
 
     renderPlayer();
 
     renderobj2();
-
-
-//    sf::RectangleShape shape(sf::Vector2f(10,5));
-//     shape.setPosition(10,10);
-
-
-
-//     sf::Sprite forTrieal;
-//     sf::Texture testTex;
-//     sf::IntRect curr(sf::IntRect(0,0,38,36));
-//     testTex.loadFromFile("res/john3part2.png");
-//     forTrieal.setTextureRect(curr);
-//     forTrieal.setPosition(10,10);
-
-
- 
-
-
-
-    // Window->draw(shape);
-    // Window->draw(forTrieal);
-
     //draw game here
     Window->display();//to draw to the screen
 
@@ -218,9 +190,9 @@ void Game::renderobj2(){
 }
 void Game::splashScreen(){
     sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");
-
     sf::Texture texture;
-    //need to do exception handling for this
+    sf::Sprite splashscreen;
+
     try{
         texture.loadFromFile("res/SKYTOPIA11.png");
     }
@@ -228,7 +200,6 @@ void Game::splashScreen(){
         cout<<"Error loading background";
     }
 
-    sf::Sprite splashscreen;
     splashscreen.setTexture(texture);
     splashscreen.setPosition(sf::Vector2f(0,0));
 
@@ -249,8 +220,16 @@ void Game::splashScreen(){
                     sleep(1);
                 }
                 window.close();
-
         }
-
+    }
 }
+void Game::collisionUpdate(){
+    if(bulletCollision(player->getPlayerGlobal(),obj2->getObjectGlobal())){
+        cout<<"Player 2 Wins\n";
+        Window->close();
+    }
+    if(bulletCollision(obj2->getPlayerGlobal(),player->getObjectGlobal())){
+        cout<<"Player 1 Wins\n";
+        Window->close();
+    }
 }
