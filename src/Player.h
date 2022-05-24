@@ -48,9 +48,9 @@ class Player{
         void stopJump();
 
         void destructBullet(Bullet*);
-        sf::IntRect getPlayerGlobal();
-        sf::IntRect getObjectGlobal();
-        sf::IntRect getForeignObjectGlobal();
+        sf::FloatRect getPlayerGlobal();
+        sf::FloatRect getObjectGlobal();
+        // sf::IntRect getForeignObjectGlobal();
         // void setMapCollisions(Area arr[8]);
 };
 
@@ -234,3 +234,12 @@ bool Player::collision(int i){
 void Player::stopJump(){
     isJumping=false;
 }
+sf::FloatRect Player::getPlayerGlobal(){
+    return sprite.getGlobalBounds();
+}
+sf::FloatRect Player::getObjectGlobal(){
+    return pro->getGlobalBound();
+}
+
+        // sf::IntRect getObjectGlobal();
+        // sf::IntRect getForeignObjectGlobal();

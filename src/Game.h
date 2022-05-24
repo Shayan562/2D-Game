@@ -52,7 +52,18 @@ class Game{
         void updateobj2();
         void renderobj2();
 
+        bool bulletCollision(sf::FloatRect, sf::FloatRect);
+
 };
+
+bool Game::bulletCollision(sf::FloatRect objectOfPlayer, sf::FloatRect objectOfBullet){
+    if(objectOfPlayer.intersects(objectOfBullet)){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
 
 void Game::init(){
     //initializing videoMode
@@ -139,6 +150,13 @@ void Game::checkEvents(){//check for keyboard presses/close button press
 
 void Game::update(){
     checkEvents();
+    if(bulletCollision(player->getPlayerGlobal(),obj2->getObjectGlobal())){
+        cout<<"Player 1 dead\n";
+        Window->close();
+    }
+    if(bulletCollision(obj2->getPlayerGlobal(),player->getObjectGlobal())){
+        cout<<"Player 2 dead\n";
+    }
     player->update();
     obj2->update();
     //std::cout<<"Pos: "<<sf::Mouse::getPosition(*Window).x<<'\n';
