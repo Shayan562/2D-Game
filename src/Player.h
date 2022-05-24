@@ -17,15 +17,19 @@ class Player{
         //initializers
         void initTexture();
         void initSprite();
+        void initPhysics();
         sf::Vector2f temp;
         // Area obj.rows[8];
 
 
         //need to set a constructor and destructor
-        const float gravity=3;
-        bool isJumping= false;
-        const float speed=2.5;
-        const float jumpHeight=-6.5;//up in sfml is lower
+        const float gravity;
+        bool isJumping;
+        const float speedMin;
+        float speed;
+        const float jumpHeightMin;//up in sfml is lower
+        float jumpHeight;
+        bool isSprinting;
 
         char directionCurr;
         bool bullet;
@@ -79,7 +83,7 @@ void Player::initSprite(){
 
     current=sf::IntRect(0,0,38,36);//left,top,width,height new
     sprite.setTextureRect(current);
-    // sprite.setScale(-2.f,2.f);
+    sprite.setScale(-1.f,1.f);
 
     sprite.setOrigin(19.f,18.f);
     sprite.setPosition(1280-(19),720-30-(18));
@@ -90,9 +94,14 @@ void Player::initSprite(){
 
 
 }
-Player::Player(){
+void Player::initPhysics(){
+        isJumping= false;
+        isSprinting=false;
+}
+Player::Player():gravity(3),speedMin(2.5),jumpHeightMin(-6.5){
     initTexture();
     initSprite();
+    initPhysics();
     pro=new Bullet;
     bullet=false;
 }
@@ -106,6 +115,13 @@ void Player::movement(char tempColHor, char tempColVer){
     // cout<<a.y+36<<" , ";
     // cout<<"bbb";
   //  if(sf::Keyboard::isKeyPressed)
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)&& isSprinting){
+        isSprinting=false;
+    }
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) && isSprinting==false){
+        isSprinting=true;
+    }
+
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A) && tempColHor!='l' ){
         directionCurr='l';
         //tempCOlHor!='l'
@@ -169,6 +185,14 @@ void Player::update(){
         else{
             pro->update();
         }
+    }
+    if(isSprinting){
+        speed=speedMin*2;
+        jumpHeight=jumpHeightMin*2;
+    }
+    else{
+        speed=speedMin;
+        jumpHeight=jumpHeightMin;
     }
     movement(ColHor,ColVer);
 

@@ -100,7 +100,7 @@ void Game::initPlayer2(){
 }
 
 Game::Game(){
-    // splashScreen();
+    splashScreen();
     //initializing
     init();
     initPlayer();
@@ -217,18 +217,21 @@ void Game::renderobj2(){
     obj2->render(*Window);
 }
 void Game::splashScreen(){
-        sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");
+    sf::RenderWindow window(sf::VideoMode(1280,720),"3BROS ENTERTAINMENT - SKY CLIMBER");
 
     sf::Texture texture;
     //need to do exception handling for this
-    if(!texture.loadFromFile("res/SKYTOPIA11.png"))
-        {
-           std::cout<<"404 Error Not Found";
-        }
+    try{
+        texture.loadFromFile("res/SKYTOPIA11.png");
+    }
+    catch(exception e){
+        cout<<"Error loading background";
+    }
+
     sf::Sprite splashscreen;
     splashscreen.setTexture(texture);
     splashscreen.setPosition(sf::Vector2f(0,0));
-    //splashscreen.scale(sf::Vector2f(2,2));
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -241,7 +244,7 @@ void Game::splashScreen(){
                 window.clear();
                 window.draw(splashscreen);
                 window.display();
-                for(int i=0;i<15;i++)
+                for(int i=0;i<7;i++)
                 {
                     sleep(1);
                 }
